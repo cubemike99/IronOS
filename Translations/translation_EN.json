@@ -248,7 +248,7 @@
             "description": "Enables BLE"
         },
         "TriggerModeEnabled": {
-            "displayText": "Trigger Mode Enabled",
+            "displayText": "Trigger Mode\n Enabled",
             "description": "Enables Trigger Mode"
         },
         "TriggerVoltage": {

@@ -95,7 +95,8 @@ static void displayUIMenu(void);
 static bool enterUIMenu(void);
 static void displayAdvancedMenu(void);
 static bool enterAdvancedMenu(void);
-
+static void displayTriggerMenu(void);
+static bool enterTriggerMenu(void);
 /*
  * Root Settings Menu
  *
@@ -161,6 +162,7 @@ const menuitem rootSettingsMenu[] {
       {0, enterUIMenu, displayUIMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                                     /*UI Menu*/
       {0, enterAdvancedMenu, displayAdvancedMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                         /*Advanced Menu*/
       {0, settings_setLanguageSwitch, settings_displayLanguageSwitch, settings_showLanguageSwitch, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}, /*Language Switch*/
+      {0, enterTriggerMenu, displayTriggerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
   {
     0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0
   } // end of menu marker. DO NOT REMOVE
@@ -291,7 +293,7 @@ const menuitem advancedMenu[] = {
 
 const menuitem triggerMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::TriggerModeEnabled), nullptr, displayTriggerModeEnabled, nullptr, SettingsOptions::TriggerModeEnabled, SettingsItemIndex::TriggerModeEnabled, 7},
-    {SETTINGS_DESC(SettingsItemIndex::TriggerVoltage), nullptr, displayTriggerVoltage, nullptr, SettingsOptions::TriggerVoltage, SettingsItemIndex::TriggerVoltage, 7},
+    {SETTINGS_DESC(SettingsItemIndex::TriggerVoltage), nullptr, displayTriggerVoltage, nullptr, SettingsOptions::TriggerVoltage, SettingsItemIndex::TriggerVoltage, 5},
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
 
@@ -738,7 +740,7 @@ static void displayPowerPulseDuration(void) { OLED::printNumber(getSettingValue(
 
 static void displayTriggerModeEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::TriggerModeEnabled)); }
 
-static int triggerVoltageSettingToNumber(int setting) {
+uint16_t triggerVoltageSettingToNumber(uint16_t setting) {
   int voltage;
   switch (setting) {
     case TRIGGER_FIXED_5V: voltage = 5; break;
@@ -752,7 +754,7 @@ static int triggerVoltageSettingToNumber(int setting) {
 }
 
 static void displayTriggerVoltage(void) {
-  OLED::printNumber(triggerVoltageSettingToNumber(getSettingValue(SettingsOptions::TriggerVoltage)), 1, FontStyle::LARGE);
+  OLED::printNumber(triggerVoltageSettingToNumber( getSettingValue(SettingsOptions::TriggerVoltage)), 2, FontStyle::LARGE);
   OLED::print(LargeSymbolVolts, FontStyle::LARGE);
 }
 
@@ -837,6 +839,11 @@ static bool enterUIMenu(void) {
 static void displayAdvancedMenu(void) { displayMenu(4); }
 static bool enterAdvancedMenu(void) {
   gui_Menu(advancedMenu);
+  return false;
+}
+static void displayTriggerMenu(void) { displayMenu(5); }
+static bool enterTriggerMenu(void) {
+  gui_Menu(triggerMenu);
   return false;
 }
 

@@ -93,4 +93,6 @@ void setSettingValue(const enum SettingsOptions option, const uint16_t newValue)
 uint8_t  lookupVoltageLevel();
 uint16_t lookupHallEffectThreshold();
 
+uint16_t triggerVoltageSettingToNumber(uint16_t setting);
+
 #endif /* SETTINGS_H_ */
