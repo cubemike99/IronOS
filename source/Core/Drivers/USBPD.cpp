@@ -373,3 +373,4 @@ void pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3) {
 }
 
 #endif
+

@@ -100,6 +100,10 @@
         "AdvancedMenu": {
             "displayText": "Advanced\nsettings",
             "description": ""
+        },
+        "TriggerMenu": {
+            "displayText": "Trigger\nsettings",
+            "description": ""
         }
     },
     "menuOptions": {
@@ -242,6 +246,14 @@
         "BLEEnabled": {
             "displayText": "BLE\n Enabled",
             "description": "Enables BLE"
+        },
+        "TriggerModeEnabled": {
+            "displayText": "Trigger Mode Enabled",
+            "description": "Enables Trigger Mode"
+        },
+        "TriggerVoltage": {
+            "displayText": "Trigger\n Voltage",
+            "description": "Selects fixed PD voltage"
         }
     }
 }

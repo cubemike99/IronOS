@@ -74,6 +74,9 @@ static void displayBrightnessLevel(void);
 static void displayInvertColor(void);
 static void displayLogoTime(void);
 
+static void displayTriggerModeEnabled(void);
+static void displayTriggerVoltage(void);
+
 #ifdef HALL_SENSOR
 static void displayHallEffect(void);
 static bool showHallEffect(void);
@@ -92,6 +95,7 @@ static void displayUIMenu(void);
 static bool enterUIMenu(void);
 static void displayAdvancedMenu(void);
 static bool enterAdvancedMenu(void);
+
 /*
  * Root Settings Menu
  *
@@ -282,6 +286,12 @@ const menuitem advancedMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), nullptr, displayPowerPulseDuration, showPowerPulseOptions, SettingsOptions::KeepAwakePulseDuration, SettingsItemIndex::PowerPulseDuration,
      7}, /*Power Pulse Duration adjustment*/
     {SETTINGS_DESC(SettingsItemIndex::SettingsReset), setResetSettings, displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset, 7}, /*Resets settings*/
+    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
+};
+
+const menuitem triggerMenu[] = {
+    {SETTINGS_DESC(SettingsItemIndex::TriggerModeEnabled), nullptr, displayTriggerModeEnabled, nullptr, SettingsOptions::TriggerModeEnabled, SettingsItemIndex::TriggerModeEnabled, 7},
+    {SETTINGS_DESC(SettingsItemIndex::TriggerVoltage), nullptr, displayTriggerVoltage, nullptr, SettingsOptions::TriggerVoltage, SettingsItemIndex::TriggerVoltage, 7},
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
 
@@ -725,6 +735,26 @@ static bool showPowerPulseOptions(void) { return getSettingValue(SettingsOptions
 static void displayPowerPulseWait(void) { OLED::printNumber(getSettingValue(SettingsOptions::KeepAwakePulseWait), 1, FontStyle::LARGE); }
 
 static void displayPowerPulseDuration(void) { OLED::printNumber(getSettingValue(SettingsOptions::KeepAwakePulseDuration), 1, FontStyle::LARGE); }
+
+static void displayTriggerModeEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::TriggerModeEnabled)); }
+
+static int triggerVoltageSettingToNumber(int setting) {
+  int voltage;
+  switch (setting) {
+    case TRIGGER_FIXED_5V: voltage = 5; break;
+    case TRIGGER_FIXED_9V: voltage = 9; break;
+    case TRIGGER_FIXED_12V: voltage = 12; break;
+    case TRIGGER_FIXED_15V: voltage = 15; break;
+    case TRIGGER_FIXED_20V: voltage = 20; break;
+    default: voltage = 5; break;
+  }
+  return voltage;
+}
+
+static void displayTriggerVoltage(void) {
+  OLED::printNumber(triggerVoltageSettingToNumber(getSettingValue(SettingsOptions::TriggerVoltage)), 1, FontStyle::LARGE);
+  OLED::print(LargeSymbolVolts, FontStyle::LARGE);
+}
 
 static bool setResetSettings(void) {
   if (userConfirmation(translatedString(Tr->SettingsResetWarning))) {

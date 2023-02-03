@@ -86,6 +86,8 @@ enum class SettingsItemIndex : uint8_t {
   SettingsReset,
   LanguageSwitch,
   BLEEnabled,
+  TriggerModeEnabled,
+  TriggerVoltage,
   NUM_ITEMS,
 };
 
@@ -130,8 +132,8 @@ struct TranslationIndexTable {
 
   uint16_t SettingsDescriptions[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
   uint16_t SettingsShortNames[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
-  uint16_t SettingsMenuEntriesDescriptions[5]; // unused
-  uint16_t SettingsMenuEntries[5];
+  uint16_t SettingsMenuEntriesDescriptions[6]; // unused
+  uint16_t SettingsMenuEntries[6];
 };
 
 extern const TranslationIndexTable *Tr;

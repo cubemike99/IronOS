@@ -52,9 +52,11 @@ enum SettingsOptions {
   LOGOTime                       = 35, // Duration the logo will be displayed for
   CalibrateCJC                   = 36, // Toggle calibrate CJC at next boot
   BLEEnabled                     = 37, // Should BLE hardware be enabled if present
+  TriggerModeEnabled             = 38, // Do we disable soldering mode and function as a PD trigger
+  TriggerVoltage                 = 39, // PD voltage to request
 
   //
-  SettingsOptionsLength = 38, //
+  SettingsOptionsLength = 40, //
 };
 
 typedef enum {
@@ -64,6 +66,15 @@ typedef enum {
   FAST      = 3, //
   MAX_VALUE = 4  //
 } settingOffSpeed_t;
+
+typedef enum {
+  TRIGGER_FIXED_5V = 0,
+  TRIGGER_FIXED_9V = 1,
+  TRIGGER_FIXED_12V = 2,
+  TRIGGER_FIXED_15V = 3,
+  TRIGGER_FIXED_20V = 4
+} trigger_fixed_voltage_t;
+
 // Settings wide operations
 void saveSettings();
 bool loadSettings();

@@ -191,6 +191,12 @@
             "maxLen": 5,
             "maxLen2": 11,
             "description": "Advanced settings. Misc catchall for settings that don't fit anywhere else or settings that require some thought before use."
+        },
+        {
+            "id": "TriggerMenu",
+            "maxLen": 5,
+            "maxLen2": 11,
+            "description": "Settings for using the iron as a USB-PD trigger."
         }
     ],
     "menuOptions": [{
@@ -402,6 +408,18 @@
             "maxLen": 7,
             "maxLen2": 15,
             "description": "Should BLE be enabled at boot time."
+        },
+        {
+            "id": "TriggerModeEnabled",
+            "maxLen": 7,
+            "maxLen2": 15,
+            "description": "Put iron in trigger mode."
+        },
+        {
+            "id": "TriggerVoltage",
+            "maxLen": 7,
+            "maxLen2": 15,
+            "description": "Trigger fixed voltage selection."
         }
     ]
 }
