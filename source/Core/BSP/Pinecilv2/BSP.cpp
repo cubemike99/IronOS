@@ -233,7 +233,12 @@ uint8_t preStartChecks() {
   performTipMeasurementStep();
   return preStartChecksDone();
 }
-uint8_t preStartChecksDone() { return (lastTipResistance == 0 || tipResistanceReadingSlot < numTipResistanceReadings || tipMeasurementOccuring) ? 0 : 1; }
+uint8_t preStartChecksDone() { 
+  if (getSettingValue(SettingsOptions::TriggerModeEnabled)) {
+    return 1;
+  } else {
+    return (lastTipResistance == 0 || tipResistanceReadingSlot < numTipResistanceReadings || tipMeasurementOccuring) ? 0 : 1; }
+}
 
 // Return hardware unique ID if possible
 uint64_t getDeviceID() {
