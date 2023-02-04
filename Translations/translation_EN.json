@@ -251,9 +251,17 @@
             "displayText": "Trigger Mode\n Enabled",
             "description": "Enables Trigger Mode"
         },
+        "TriggerUsePPS": {
+            "displayText": "Trigger Use\n PPS",
+            "description": "Use a PPS PDO instead of a fixed one"
+        },
         "TriggerVoltage": {
             "displayText": "Trigger\n Voltage",
-            "description": "Selects fixed PD voltage"
+            "description": "Volts to negotiate when using fixed PDO"
+        },
+        "TriggerPPSVoltage": {
+            "displayText": "Trigger\n PPS Voltage",
+            "description": "Volts to negotiate when using PPS"
         }
     }
 }

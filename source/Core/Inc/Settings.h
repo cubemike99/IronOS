@@ -53,10 +53,12 @@ enum SettingsOptions {
   CalibrateCJC                   = 36, // Toggle calibrate CJC at next boot
   BLEEnabled                     = 37, // Should BLE hardware be enabled if present
   TriggerModeEnabled             = 38, // Do we disable soldering mode and function as a PD trigger
-  TriggerVoltage                 = 39, // PD voltage to request
+  TriggerUsePPS                  = 39, // Selcets between negotiating for fixed PDOs and PPS voltages
+  TriggerVoltage                 = 40, // Fixed PDO to request (if using fixed PDO)
+  TriggerPPSVoltage              = 41, // PPS Voltage to request (if using PPS)
 
   //
-  SettingsOptionsLength = 40, //
+  SettingsOptionsLength = 42, //
 };
 
 typedef enum {

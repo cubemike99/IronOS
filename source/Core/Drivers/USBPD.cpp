@@ -205,18 +205,39 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
 #endif
     }
   } else {
-    for (uint8_t i = 0; i < numCaps; i++) {
-      if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
-        // This is a fixed PDO entry
+    if (!getSettingValue(SettingsOptions::TriggerUsePPS)) {
+      for (uint8_t i = 0; i < numCaps; i++) {
+        if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
+          // This is a fixed PDO entry
 
-        int voltage_mv             = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(lastCapabilities[i])); // voltage in mV units
-        int current_a_x100         = PD_PDO_SRC_FIXED_CURRENT_GET(lastCapabilities[i]);            // current in 10mA units
-        if (voltage_mv == 1000*triggerVoltageSettingToNumber(getSettingValue(SettingsOptions::TriggerVoltage))) {
-          *bestIndex    = i;
-          *bestVoltage  = voltage_mv;
-          *bestCurrent  = current_a_x100;
-          *bestIsAVS    = false;
-          *bestIsPPS    = false;
+          int voltage_mv             = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(lastCapabilities[i])); // voltage in mV units
+          int current_a_x100         = PD_PDO_SRC_FIXED_CURRENT_GET(lastCapabilities[i]);            // current in 10mA units
+          if (voltage_mv == 1000*triggerVoltageSettingToNumber(getSettingValue(SettingsOptions::TriggerVoltage))) {
+            *bestIndex    = i;
+            *bestVoltage  = voltage_mv;
+            *bestCurrent  = current_a_x100;
+            *bestIsAVS    = false;
+            *bestIsPPS    = false;
+          }
+        }
+      }
+    } else {
+      for (uint8_t i = 0; i < numCaps; i++) {
+        if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS))) {
+          // If this is a PPS slot, calculate the max voltage in the PPS range that can we be used and maintain
+          uint16_t max_voltage = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCapabilities[i]));
+          uint16_t min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCapabilities[i]));
+          uint16_t max_current = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCapabilities[i])); // max current in 10mA units
+
+          uint16_t target_voltage = getSettingValue(SettingsOptions::TriggerPPSVoltage);
+
+          if (target_voltage > min_voltage && target_voltage < max_voltage) {
+            *bestIndex   = i;
+            *bestVoltage = target_voltage;
+            *bestCurrent = max_current;
+            *bestIsPPS   = true;
+            *bestIsAVS   = false;
+          }
         }
       }
     }

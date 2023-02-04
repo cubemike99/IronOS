@@ -88,7 +88,9 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 1, 1, 0},                                                   // CalibrateCJC
     {0, 1, 1, 1},                                                   // BLEEnabled
     {0, 1, 1, 0},                                                   // Trigger Mode Enabled
+    {0, 1, 1, 0},                                                   // Trigger Use PPS
     {0, 4, 1, 0},                                                   // Trigger Mode Voltage
+    {1000, 21000, 100, 5000}                                        // Trigger PPS Voltage
 
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));

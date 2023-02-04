@@ -75,7 +75,9 @@ static void displayInvertColor(void);
 static void displayLogoTime(void);
 
 static void displayTriggerModeEnabled(void);
+static void displayTriggerUsePPS(void);
 static void displayTriggerVoltage(void);
+static void displayTriggerPPSVoltage(void);
 
 #ifdef HALL_SENSOR
 static void displayHallEffect(void);
@@ -293,7 +295,9 @@ const menuitem advancedMenu[] = {
 
 const menuitem triggerMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::TriggerModeEnabled), nullptr, displayTriggerModeEnabled, nullptr, SettingsOptions::TriggerModeEnabled, SettingsItemIndex::TriggerModeEnabled, 7},
+    {SETTINGS_DESC(SettingsItemIndex::TriggerUsePPS), nullptr, displayTriggerUsePPS, nullptr, SettingsOptions::TriggerUsePPS, SettingsItemIndex::TriggerUsePPS, 7},
     {SETTINGS_DESC(SettingsItemIndex::TriggerVoltage), nullptr, displayTriggerVoltage, nullptr, SettingsOptions::TriggerVoltage, SettingsItemIndex::TriggerVoltage, 5},
+    {SETTINGS_DESC(SettingsItemIndex::TriggerPPSVoltage), nullptr, displayTriggerPPSVoltage, nullptr, SettingsOptions::TriggerPPSVoltage, SettingsItemIndex::TriggerPPSVoltage, 5},
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
 
@@ -739,6 +743,7 @@ static void displayPowerPulseWait(void) { OLED::printNumber(getSettingValue(Sett
 static void displayPowerPulseDuration(void) { OLED::printNumber(getSettingValue(SettingsOptions::KeepAwakePulseDuration), 1, FontStyle::LARGE); }
 
 static void displayTriggerModeEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::TriggerModeEnabled)); }
+static void displayTriggerUsePPS(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::TriggerUsePPS)); }
 
 uint16_t triggerVoltageSettingToNumber(uint16_t setting) {
   int voltage;
@@ -757,6 +762,13 @@ static void displayTriggerVoltage(void) {
   OLED::printNumber(triggerVoltageSettingToNumber( getSettingValue(SettingsOptions::TriggerVoltage)), 2, FontStyle::LARGE);
   OLED::print(LargeSymbolVolts, FontStyle::LARGE);
 }
+
+static void displayTriggerPPSVoltage(void) {
+    OLED::printNumber(getSettingValue(SettingsOptions::TriggerPPSVoltage) / 1000, 2, FontStyle::SMALL);
+    OLED::print(LargeSymbolDot, FontStyle::SMALL);
+    OLED::printNumber((getSettingValue(SettingsOptions::TriggerPPSVoltage) % 1000)/10, 2, FontStyle::SMALL, false);
+}
+
 
 static bool setResetSettings(void) {
   if (userConfirmation(translatedString(Tr->SettingsResetWarning))) {

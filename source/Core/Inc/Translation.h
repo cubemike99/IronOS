@@ -87,7 +87,9 @@ enum class SettingsItemIndex : uint8_t {
   LanguageSwitch,
   BLEEnabled,
   TriggerModeEnabled,
+  TriggerUsePPS,
   TriggerVoltage,
+  TriggerPPSVoltage,
   NUM_ITEMS,
 };
 

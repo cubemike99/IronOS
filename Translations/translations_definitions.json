@@ -416,10 +416,22 @@
             "description": "Put iron in trigger mode."
         },
         {
+            "id": "TriggerUsePPS",
+            "maxLen": 7,
+            "maxLen2": 15,
+            "description": "Use PPS for trigger voltage."
+        },
+        {
             "id": "TriggerVoltage",
             "maxLen": 7,
             "maxLen2": 15,
             "description": "Trigger fixed voltage selection."
+        },
+        {
+            "id": "TriggerPPSVoltage",
+            "maxLen": 7,
+            "maxLen2": 15,
+            "description": "Trigger PPS voltage selection."
         }
     ]
 }
